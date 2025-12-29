@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ebon Shop</title>
+        <link rel="icon" href="https://i.pinimg.com/736x/b2/f8/8d/b2f88dff1f2fb354e0aff9412fe18c41.jpg">   <!-- Browser tab logo -->
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+      :root {
+        --cyan-glow: #3ccfdc;
+        --glow-opacity: 0.3;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #0a0a0a;
+        color: #f5f5f5;
+        overflow-x: hidden;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1a1a1a;
+        border-radius: 100px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #222;
+      }
+
+      .video-overlay {
+        background: linear-gradient(to bottom, rgba(10, 10, 10, 0.75), rgba(10, 10, 10, 0.98));
+      }
+
+      /* Transitions */
+      .transition-all {
+        transition-duration: 400ms !important;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+      }
+
+      /* Custom Glow Utilities */
+      .glow-border-cyan:hover {
+        border-color: rgba(60, 207, 220, 0.4);
+        box-shadow: 0 0 12px rgba(60, 207, 220, 0.15);
+      }
+
+      .glow-text-cyan {
+        color: var(--cyan-glow);
+        text-shadow: 0 0 8px rgba(60, 207, 220, 0.3);
+      }
+
+      .glow-active-link {
+        border-bottom: 2px solid var(--cyan-glow);
+        box-shadow: 0 4px 10px -4px rgba(60, 207, 220, 0.4);
+      }
+
+      input:focus, textarea:focus {
+        border-color: rgba(60, 207, 220, 0.4) !important;
+        box-shadow: 0 0 8px rgba(60, 207, 220, 0.1) !important;
+        outline: none !important;
+      }
+
+      .primary-button {
+        background: #111;
+        border: 1px solid #333;
+        color: #fff;
+        border-radius: 9999px !important;
+        transition: all 0.4s ease;
+        padding: 1.25rem 2.5rem; /* Increased default padding */
+      }
+
+      .primary-button:hover {
+        border-color: rgba(60, 207, 220, 0.5);
+        box-shadow: 0 0 15px rgba(60, 207, 220, 0.2);
+        background: #161616;
+      }
+
+      .active-sidebar-btn {
+        background: rgba(60, 207, 220, 0.05);
+        border-left: 3px solid var(--cyan-glow);
+        color: #fff !important;
+        border-radius: 1.5rem !important; /* Larger rounding for sidebar buttons */
+      }
+
+      /* Force all inputs to be rounded */
+      input, textarea, select {
+        border-radius: 1rem !important;
+      }
+
+      /* Card Rounding */
+      .ebon-card {
+        border-radius: 2rem !important;
+      }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0"
+      }
+    }
+    </script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

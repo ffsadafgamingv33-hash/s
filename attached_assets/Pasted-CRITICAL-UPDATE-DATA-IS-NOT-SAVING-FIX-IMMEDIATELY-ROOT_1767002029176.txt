@@ -1,0 +1,129 @@
+CRITICAL UPDATE – DATA IS NOT SAVING. FIX IMMEDIATELY.
+
+========================
+ROOT PROBLEM IDENTIFIED
+========================
+
+Data is NOT being persisted because:
+- Database connection is not properly initialized
+- Queries are not being executed or committed
+- Tables may not exist
+- Code may still be using in-memory fallback
+
+YOU MUST FIX ALL OF THESE.
+
+========================
+DATABASE CONNECTION (MANDATORY)
+========================
+
+- Use PostgreSQL with a SINGLE global connection pool
+- Initialize database ON SERVER START
+- Fail the server if DB connection fails
+
+Example (Node.js):
+
+  import pg from "pg";
+  const pool = new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+  });
+
+  await pool.query("SELECT 1");
+
+- Do NOT create multiple pools
+- Do NOT use mock DB
+- Do NOT silently ignore errors
+
+========================
+TABLE CREATION (MANDATORY)
+========================
+
+- On server startup:
+  - CREATE TABLE IF NOT EXISTS for ALL tables
+  - Log success or failure
+- If table creation fails → server must crash
+
+========================
+REGISTER SAVE FIX
+========================
+
+- On /api/register:
+  - INSERT user into PostgreSQL
+  - VERIFY insertion by immediately SELECTing the user
+  - If INSERT returns no row → throw error
+
+Example:
+
+  const result = await pool.query(
+    "INSERT INTO users (email, password, role) VALUES ($1,$2,$3) RETURNING id",
+    [email, hash, role]
+  );
+
+  if (!result.rows.length) throw new Error("User insert failed");
+
+========================
+ADMIN LOGIC FIX (NO MEMORY)
+========================
+
+- Admin detection MUST use DB count:
+
+  SELECT COUNT(*) FROM users;
+
+- NEVER use array length or cached value
+- NEVER store admin in frontend
+
+========================
+ITEM SAVE FIX
+========================
+
+- Admin item add MUST:
+  - INSERT into PostgreSQL
+  - Return inserted row
+- /api/items MUST:
+  - SELECT * FROM items
+  - Return DB rows only
+
+========================
+TRANSACTION SAFETY
+========================
+
+- Use SQL transactions for:
+  - Purchases
+  - Credit deduction
+- ROLLBACK on any failure
+
+========================
+LOGGING (REQUIRED)
+========================
+
+- Log EVERY DB operation:
+  - CONNECT
+  - INSERT
+  - UPDATE
+  - SELECT
+- Log errors with full stack trace
+- NO empty catch blocks
+
+========================
+FORBIDDEN (STRICT)
+========================
+
+❌ localStorage for data persistence
+❌ in-memory arrays
+❌ try/catch without console.error
+❌ fake success responses
+
+========================
+FINAL VALIDATION
+========================
+
+- Restart server
+- Register user
+- Restart server again
+- Login must STILL work
+- User MUST still exist
+- Items MUST still exist
+
+If any of the above fails, continue fixing until it passes.
+
+Return ONLY fixed backend code.
